@@ -1,2 +1,2 @@
-# S.U.L.U-AI
-Projeto inicial de agentes de ia
+# Deal Monitor AI
+Projeto inicial de agentes de ia para monitor sites de e-commerce
