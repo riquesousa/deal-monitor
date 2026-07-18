@@ -1,3 +1,720 @@
+# PROJECT_STRUCTURE.md
+
+Projeto: Deal Monitor
+
+Versão: 1.0
+
+Status: Documento Oficial
+
+Dependências:
+
+ARCHITECTURE.md
+
+CLEAN_ARCHITECTURE.md
+
+---
+
+# Objetivo
+
+Este documento define a estrutura oficial do repositório do Deal Monitor.
+
+Toda implementação deverá respeitar exatamente esta organização.
+
+Não é permitido criar novos diretórios sem aprovação arquitetural (ADR).
+
+---
+
+# Princípios
+
+A estrutura deve:
+
+- facilitar localização de código;
+- reduzir acoplamento;
+- separar domínio de infraestrutura;
+- facilitar testes;
+- permitir crescimento do projeto;
+- facilitar navegação pelo Claude Code.
+
+---
+
+# Estrutura Geral
+
+```text
+deal-monitor/
+
+├── backend/
+├── frontend/
+├── docs/
+├── scripts/
+├── docker/
+├── .github/
+├── tests/
+├── tools/
+├── .env.example
+├── docker-compose.yml
+├── Makefile
+├── README.md
+└── LICENSE
+```
+
+---
+
+# Responsabilidade
+
+backend/
+
+Código Python.
+
+Nunca conter React.
+
+---
+
+frontend/
+
+Código React.
+
+Nunca conter Python.
+
+---
+
+docs/
+
+Toda documentação oficial.
+
+Nunca conter código executável.
+
+---
+
+scripts/
+
+Scripts auxiliares.
+
+Migrações.
+
+Importações.
+
+Utilidades.
+
+---
+
+docker/
+
+Dockerfiles.
+
+Compose.
+
+Infraestrutura local.
+
+---
+
+tests/
+
+Testes compartilhados.
+
+Fixtures.
+
+Recursos auxiliares.
+
+---
+
+tools/
+
+Ferramentas de desenvolvimento.
+
+Geradores.
+
+Validadores.
+
+Linters.
+
+---
+
+# Backend
+
+```text
+backend/
+
+├── app/
+├── bootstrap/
+├── infrastructure/
+├── framework/
+├── shared/
+├── tests/
+├── alembic/
+├── pyproject.toml
+└── README.md
+```
+
+---
+
+# app/
+
+Representa o núcleo da aplicação.
+
+Nunca conter código específico de framework.
+
+---
+
+# Estrutura do app
+
+```text
+app/
+
+├── domain/
+├── application/
+├── interfaces/
+└── common/
+```
+
+---
+
+# domain/
+
+Representa o negócio.
+
+Estrutura:
+
+```text
+domain/
+
+├── entities/
+├── value_objects/
+├── enums/
+├── services/
+├── specifications/
+├── exceptions/
+└── interfaces/
+```
+
+---
+
+# application/
+
+```text
+application/
+
+├── use_cases/
+├── dto/
+├── commands/
+├── queries/
+├── services/
+├── ports/
+├── validators/
+└── mappers/
+```
+
+---
+
+# interfaces/
+
+```text
+interfaces/
+
+├── controllers/
+├── presenters/
+├── mappers/
+└── serializers/
+```
+
+---
+
+# common/
+
+Código compartilhado.
+
+Somente componentes realmente reutilizáveis.
+
+Nunca colocar lógica de negócio.
+
+---
+
+# bootstrap/
+
+Inicialização da aplicação.
+
+Estrutura:
+
+```text
+bootstrap/
+
+├── startup.py
+├── container.py
+├── registry.py
+├── dependencies.py
+└── lifecycle.py
+```
+
+---
+
+# infrastructure/
+
+```text
+infrastructure/
+
+├── persistence/
+├── scraping/
+├── notifications/
+├── configuration/
+├── storage/
+├── scheduler/
+└── monitoring/
+```
+
+---
+
+# persistence/
+
+```text
+persistence/
+
+├── sqlite/
+├── models/
+├── mappers/
+└── migrations/
+```
+
+---
+
+# scraping/
+
+```text
+scraping/
+
+├── connectors/
+├── parsers/
+├── normalizers/
+├── validators/
+├── browser/
+└── pipelines/
+```
+
+---
+
+# monitoring/
+
+Logs.
+
+Métricas.
+
+Tracing.
+
+Health checks.
+
+---
+
+# framework/
+
+Responsável por integrar tecnologias externas.
+
+```text
+framework/
+
+├── api/
+├── database/
+├── scheduler/
+├── configuration/
+└── logging/
+```
+
+---
+
+# shared/
+
+Código compartilhado entre infraestrutura e framework.
+
+Evitar crescimento excessivo.
+
+---
+
+# Frontend
+
+O frontend possui responsabilidade exclusiva pela interface do usuário.
+
+Nunca implementa regras de negócio.
+
+Nunca acessa banco de dados.
+
+Toda comunicação ocorre através da API.
+
+---
+
+Estrutura oficial
+
+frontend/
+
+├── src/
+│
+├── public/
+│
+├── tests/
+│
+├── package.json
+│
+├── vite.config.ts
+│
+└── README.md
+
+---
+
+# Estrutura do src
+
+src/
+
+├── app/
+├── components/
+├── pages/
+├── layouts/
+├── routes/
+├── services/
+├── hooks/
+├── contexts/
+├── assets/
+├── styles/
+├── utils/
+├── types/
+└── tests/
+
+---
+
+# app/
+
+Responsável por:
+
+- inicialização;
+- providers;
+- configuração global;
+- bootstrap do React.
+
+---
+
+# components/
+
+Componentes reutilizáveis.
+
+Exemplos:
+
+Button
+
+Card
+
+DataGrid
+
+SearchBar
+
+PriceCard
+
+PromotionBadge
+
+CategorySelector
+
+StoreSelector
+
+Modal
+
+Dialog
+
+---
+
+# pages/
+
+Cada página representa uma rota principal.
+
+Exemplos:
+
+Dashboard
+
+Products
+
+Promotions
+
+History
+
+Settings
+
+Stores
+
+Categories
+
+Scheduler
+
+Logs
+
+---
+
+# layouts/
+
+Layouts compartilhados.
+
+MainLayout
+
+AdminLayout
+
+SettingsLayout
+
+---
+
+# routes/
+
+Configuração das rotas.
+
+Nunca colocar lógica de negócio.
+
+---
+
+# services/
+
+Clientes HTTP.
+
+Exemplo:
+
+BackendAPI
+
+PromotionAPI
+
+CatalogAPI
+
+HistoryAPI
+
+ConfigurationAPI
+
+Nunca implementar regras.
+
+---
+
+# hooks/
+
+Hooks reutilizáveis.
+
+Exemplos:
+
+useProducts()
+
+usePromotions()
+
+useHistory()
+
+usePagination()
+
+useFilters()
+
+---
+
+# contexts/
+
+Context API.
+
+Responsável apenas por estado global.
+
+Exemplos:
+
+ThemeContext
+
+ConfigurationContext
+
+AuthenticationContext (futuro)
+
+---
+
+# assets/
+
+Imagens.
+
+Ícones.
+
+Fontes.
+
+Logotipos.
+
+---
+
+# styles/
+
+CSS global.
+
+Tailwind.
+
+Variáveis visuais.
+
+---
+
+# utils/
+
+Funções auxiliares.
+
+Nunca implementar regras de negócio.
+
+---
+
+# types/
+
+Tipos TypeScript.
+
+DTOs.
+
+Interfaces.
+
+Enums do frontend.
+
+---
+
+# Testes
+
+Estrutura
+
+tests/
+
+├── unit/
+├── integration/
+├── e2e/
+└── fixtures/
+
+---
+
+# Organização da Documentação
+
+docs/
+
+├── 01-architecture/
+├── 02-backend/
+├── 03-frontend/
+├── 04-scraping/
+├── 05-database/
+├── 06-api/
+├── 07-testing/
+├── 08-devops/
+├── 09-decisions/
+├── 10-prompts/
+└── assets/
+
+---
+
+# Organização dos ADRs
+
+docs/
+
+09-decisions/
+
+├── ADR-000.md
+├── ADR-001.md
+├── ADR-002.md
+
+...
+
+Cada decisão arquitetural recebe um documento próprio.
+
+Nunca alterar ADRs antigos.
+
+Criar sempre uma nova ADR.
+
+---
+
+# Organização dos Prompts
+
+docs/
+
+10-prompts/
+
+├── backlog/
+├── implementation/
+├── refactoring/
+├── testing/
+├── debugging/
+└── review/
+
+Todos os prompts utilizados pelo Claude Code permanecerão versionados.
+
+---
+
+# Convenções de Nome
+
+Arquivos Python
+
+snake_case.py
+
+Classes
+
+PascalCase
+
+Funções
+
+snake_case
+
+Constantes
+
+UPPER_CASE
+
+Variáveis
+
+snake_case
+
+---
+
+# Convenções React
+
+Componentes
+
+PascalCase.tsx
+
+Hooks
+
+useSomething.ts
+
+Contexts
+
+SomethingContext.tsx
+
+Tipos
+
+something.types.ts
+
+---
+
+# Arquivos Proibidos
+
+Nunca criar:
+
+helper.py
+
+utils.py (genérico)
+
+manager.py
+
+common.py (genérico)
+
+misc.py
+
+temp.py
+
+test2.py
+
+new.py
+
+final.py
+
+copy.py
+
+---
+
+Cada arquivo deve possuir responsabilidade explícita.
+
+---
+
+# Critérios de Aceitação
+
+A estrutura será considerada correta quando:
+
+[ ] Cada módulo possuir responsabilidade única.
+
+[ ] O domínio permanecer isolado.
+
+[ ] Backend e Frontend permanecerem independentes.
+
+[ ] Toda documentação estiver organizada.
+
+[ ] Não existirem diretórios genéricos.
+
+# PROJECT_STRUCTURE.md
+
 Projeto: Deal Monitor
 
 Versão: 1.0
@@ -6,918 +723,553 @@ Status: Documento Oficial
 
 ---
 
-# 1. Objetivo
+# Organização dos Testes
 
-Este documento define a estrutura oficial do repositório.
+Todos os testes devem ficar separados do código de produção.
 
-Toda implementação deverá respeitar exatamente esta organização.
+Nenhum arquivo de teste deve ser armazenado junto aos módulos da aplicação, exceto quando houver necessidade específica de testes locais.
 
-Nenhuma pasta deverá ser criada sem necessidade.
+Estrutura oficial:
 
-Sempre priorizar organização.
-
----
-
-# 2. Estrutura Geral
-
-deal-monitor/
-
-├── backend/
-
-├── frontend/
-
-├── docs/
-
-├── tests/
-
-├── scripts/
-
-├── database/
-
-├── logs/
-
-├── config/
-
-├── .gitignore
-
-├── README.md
-
-├── pyproject.toml
-
-├── package.json
-
-└── CLAUDE.md
-
-Cada diretório possui responsabilidade única.
-
----
-
-# 3. Backend
-
-backend/
-
-Representa toda aplicação Python.
-
-Nunca colocar arquivos React aqui.
-
-Nunca colocar arquivos SQL soltos.
-
-Nunca colocar documentação.
-
----
-
-Estrutura
-
-backend/
-
-app/
-
-api/
-
-controllers/
-
-services/
-
-repositories/
-
-models/
-
-schemas/
-
-connectors/
-
-scheduler/
-
-database/
-
-core/
-
-config/
-
-utils/
-
-exceptions/
-
-middlewares/
-
-dependencies/
-
-main.py
-
----
-
-# 4. app/
-
-Responsável apenas por organizar módulos internos.
-
-Não deve conter regra de negócio.
-
-Serve apenas como agrupador.
-
----
-
-# 5. api/
-
-Representa a camada HTTP.
-
-Pode conter:
-
-Routers
-
-Versionamento
-
-Registro de endpoints
-
-Não pode conter:
-
-Regra de negócio
-
-Persistência
-
-Playwright
-
----
-
-# 6. controllers/
-
-Responsabilidade:
-
-Receber requisições HTTP.
-
-Validar entrada.
-
-Chamar Services.
-
-Retornar respostas.
-
-Nunca:
-
-Consultar banco.
-
-Executar scraping.
-
-Aplicar regras.
-
-Controller deve possuir poucas linhas.
-
----
-
-# 7. services/
-
-Camada mais importante.
-
-Toda regra pertence aqui.
-
-Exemplos:
-
-ProductService
-
-CategoryService
-
-StoreService
-
-PromotionService
-
-SearchService
-
-HistoryService
-
-ConfigurationService
-
-SchedulerService
-
-Nunca acessar Playwright diretamente.
-
-Nunca acessar React.
-
-Nunca responder HTTP.
-
----
-
-# 8. repositories/
-
-Persistência.
-
-Cada entidade possui exatamente um Repository.
-
-Exemplo
-
-ProductRepository
-
-CategoryRepository
-
-StoreRepository
-
-HistoryRepository
-
-Repositories nunca:
-
-Calculam descontos.
-
-Aplicam filtros de negócio.
-
-Executam scraping.
-
----
-
-# 9. models/
-
-Representam tabelas.
-
-Utilizar SQLAlchemy.
-
-Uma classe por arquivo.
-
-Exemplo
-
-product.py
-
-category.py
-
-store.py
-
-history.py
-
-Nunca utilizar Models para Response.
-
----
-
-# 10. schemas/
-
-DTOs.
-
-Utilizar Pydantic.
-
-Separar:
-
-Request
-
-Response
-
-Internal DTO
-
-Nunca misturar.
-
----
-
-Exemplo
-
-product_request.py
-
-product_response.py
-
-product_filter.py
-
----
-
-# 11. connectors/
-
-Um diretório para cada loja.
-
-backend/
-
-connectors/
-
-amazon/
-
-kabum/
-
-mercadolivre/
-
-pichau/
-
-terabyte/
-
-Cada connector possui estrutura própria.
-
----
-
-amazon/
-
-connector.py
-
-parser.py
-
-normalizer.py
-
-selectors.py
-
-config.py
-
-Nunca acessar banco.
-
-Nunca chamar Repository.
-
----
-
-# 12. scheduler/
-
-Contém atualização automática.
-
-Arquivos
-
-scheduler.py
-
-jobs.py
-
-worker.py
-
-Nunca conter scraping.
-
-Somente orquestração.
-
----
-
-# 13. database/
-
-Contém configuração SQLAlchemy.
-
-engine.py
-
-session.py
-
-base.py
-
-migration.py
-
-Não colocar Models aqui.
-
----
-
-# 14. core/
-
-Configuração global.
-
-Logger
-
-Settings
-
-Constantes
-
-Enums
-
-Nunca colocar regra de negócio.
-
----
-
-# 15. config/
-
-Arquivos de configuração.
-
-Categorias.
-
-Lojas.
-
-Scheduler.
-
-Timeout.
-
-User-Agent.
-
-Seletores.
-
-Exemplo
-
-stores.yaml
-
-scheduler.yaml
-
-categories.yaml
-
-Nunca hardcode.
-
----
-
-# 16. exceptions/
-
-Exceções customizadas.
-
-Exemplo
-
-ConnectorException
-
-CategoryNotFound
-
-StoreNotFound
-
-TimeoutException
-
-Nunca utilizar Exception diretamente.
-
----
-
-# 17. dependencies/
-
-Injeção de dependência.
-
-Factories.
-
-Providers.
-
-Singletons.
-
-Nunca colocar regras.
-
----
-
-# 18. middlewares/
-
-Middlewares FastAPI.
-
-Logging.
-
-Tempo de resposta.
-
-Tratamento global.
-
-Nunca lógica de negócio.
-
----
-
-# 19. utils/
-
-Apenas funções realmente genéricas.
-
-Exemplo
-
-Conversão monetária.
-
-Datas.
-
-Strings.
-
-Hash.
-
-Nunca criar:
-
-helpers.py
-
-utils2.py
-
-misc.py
-
----
-
-# 20. Frontend
-
-frontend/
-
-Aplicação React.
-
-Nunca acessar banco.
-
-Nunca executar scraping.
-
-Sempre consumir REST.
-
----
-
-Estrutura
-
-frontend/
-
-src/
-
-assets/
-
-components/
-
-pages/
-
-services/
-
-hooks/
-
-contexts/
-
-types/
-
-routes/
-
-layouts/
-
-styles/
-
-utils/
-
----
-
-# 21. pages/
-
-Cada tela possui uma página.
-
-Dashboard
-
-Products
-
-Categories
-
-Stores
-
-History
-
-Settings
-
-Nunca componentes reutilizáveis.
-
----
-
-# 22. components/
-
-Componentes reutilizáveis.
-
-Exemplo
-
-Table
-
-Button
-
-Card
-
-Modal
-
-SearchInput
-
-ProductCard
-
-PriceBadge
-
-PromotionBadge
-
----
-
-# 23. services/
-
-Comunicação HTTP.
-
-Exemplo
-
-product_service.ts
-
-category_service.ts
-
-history_service.ts
-
-Nunca colocar lógica visual.
-
----
-
-# 24. hooks/
-
-React Hooks.
-
-Exemplo
-
-useProducts
-
-useHistory
-
-useCategories
-
-useStores
-
----
-
-# 25. routes/
-
-Rotas.
-
-Nada além disso.
-
----
-
-# 26. assets/
-
-Imagens.
-
-Ícones.
-
-Logo.
-
----
-
-# 27. styles/
-
-CSS global.
-
-Tema.
-
-Variáveis.
-
-Tailwind.
-
----
-
-# 28. types/
-
-Interfaces TypeScript.
-
-Nunca duplicar DTO.
-
-Sempre manter compatível com Backend.
-
----
-
-# 29. Tests
-
+```text
 tests/
 
-backend/
-
-frontend/
-
-integration/
-
-fixtures/
-
-mocks/
-
-Nunca misturar.
-
----
-
-# 30. Scripts
-
-scripts/
-
-Inicialização.
-
-Backup.
-
-Importação.
-
-Limpeza.
-
-Nunca colocar regra de negócio.
+├── unit/
+│
+├── integration/
+│
+├── e2e/
+│
+├── fixtures/
+│
+├── mocks/
+│
+├── fakes/
+│
+├── builders/
+│
+└── resources/
+```
 
 ---
 
-# 31. Logs
+# Testes Unitários
 
-logs/
+Responsáveis por validar componentes isolados.
 
-Logs diários.
+Nunca devem depender de:
 
-Nunca versionar.
+- SQLite
+- PostgreSQL
+- Playwright
+- Internet
+- APIs externas
 
-Adicionar ao .gitignore.
-
----
-
-# 32. Database
-
-database/
-
-Apenas SQLite.
-
-Exemplo
-
-deal_monitor.db
-
-Backups.
-
-Nunca código.
+Devem executar rapidamente.
 
 ---
 
-# 33. Docs
+# Testes de Integração
 
-docs/
+Validam integração entre módulos.
 
-Toda documentação.
+Podem utilizar:
 
-Nunca colocar código.
+- Banco local
+- API local
+- Arquivos temporários
 
-Nunca colocar imagens temporárias.
-
----
-
-Estrutura
-
-00-project/
-
-01-architecture/
-
-02-backend/
-
-03-frontend/
-
-04-database/
-
-05-scraping/
-
-06-testing/
-
-07-guides/
-
-08-backlog/
-
-09-prompts/
+Nunca acessar ambientes externos.
 
 ---
 
-# 34. Nomeação
+# Testes End-to-End
 
-Pastas
+Validam o comportamento completo do sistema.
 
-snake_case
-
-Arquivos
-
-snake_case
-
-Classes
-
-PascalCase
-
-Métodos
-
-snake_case
-
-Constantes
-
-UPPER_CASE
-
----
-
-# 35. Como adicionar um novo Connector
-
-Criar pasta
-
-connectors/nova_loja/
-
-Adicionar
-
-connector.py
-
-parser.py
-
-normalizer.py
-
-selectors.py
-
-config.py
-
-Registrar Connector.
-
-Fim.
-
-Nenhuma outra camada deve ser modificada.
-
----
-
-# 36. Como adicionar uma nova tela
-
-Criar
-
-pages/
-
-Criar rota.
-
-Criar Service.
-
-Consumir API.
-
-Nunca acessar banco.
-
----
-
-# 37. Como adicionar um novo Endpoint
-
-Controller
-
-↓
-
-Service
-
-↓
-
-Repository
-
-↓
-
-Model
-
-↓
-
-Schema
-
-Nunca pular camadas.
-
----
-
-# 38. Como adicionar uma nova tabela
-
-Model
-
-Migration
-
-Repository
-
-DTO
-
-Service
-
-Endpoint
-
-Sempre nesta ordem.
-
----
-
-# 39. Arquivos Proibidos
-
-helpers.py
-
-utils2.py
-
-misc.py
-
-temp.py
-
-novo.py
-
-teste.py
-
-final.py
-
-codigo.py
-
-Sempre utilizar nomes descritivos.
-
----
-
-# 40. Checklist do Claude Code
-
-Antes de criar um arquivo verificar:
-
-Existe pasta correta?
-
-Existe módulo correto?
-
-Existe camada correta?
-
-Já existe arquivo semelhante?
-
-Estou quebrando alguma regra arquitetural?
-
-Este arquivo realmente precisa existir?
-
----
-
-# 41. Estrutura Esperada do Projeto Final
-
-Ao concluir o MVP o projeto deverá possuir aproximadamente:
-
-Backend
-
-80 a 120 arquivos
+Fluxo esperado:
 
 Frontend
 
-40 a 60 arquivos
+↓
 
-Docs
+API
 
-50+ documentos
+↓
 
-Testes
+Application
 
-100+ testes
+↓
 
-Connectors
+Infrastructure
 
-5
+↓
 
-Services
-
-10+
-
-Repositories
-
-8+
-
-Models
-
-8+
-
-Pages
-
-8+
-
-Sem arquivos órfãos.
-
-Sem diretórios vazios.
-
-Sem duplicação.
+Banco
 
 ---
 
-# 42. Regra Final
+# Fixtures
 
-A estrutura do projeto é considerada parte da arquitetura.
+Fixtures representam dados reutilizáveis.
 
-Mover arquivos para locais incorretos caracteriza violação arquitetural.
+Exemplos:
 
-Todo novo módulo deverá seguir este documento integralmente.
+Produtos
+
+Categorias
+
+Lojas
+
+Históricos
+
+Promoções
+
+Configurações
+
+Nunca utilizar dados aleatórios quando houver fixture disponível.
+
+---
+
+# Builders
+
+Builders facilitam criação de objetos de teste.
+
+Exemplos:
+
+CatalogProductBuilder
+
+PromotionBuilder
+
+PriceHistoryBuilder
+
+StoreBuilder
+
+CategoryBuilder
+
+---
+
+# Mocks
+
+Utilizados quando for necessário validar interação entre componentes.
+
+Exemplos:
+
+NotificationGateway
+
+StorageGateway
+
+ConfigurationProvider
+
+---
+
+# Fakes
+
+Implementações simplificadas.
+
+Exemplos:
+
+FakeCatalogRepository
+
+FakeBrowserGateway
+
+FakeClockProvider
+
+---
+
+# Organização das Configurações
+
+Toda configuração deverá ficar centralizada.
+
+Estrutura:
+
+```text
+config/
+
+├── application.yaml
+├── logging.yaml
+├── scraping.yaml
+├── scheduler.yaml
+├── categories.yaml
+├── stores.yaml
+└── development.yaml
+```
+
+---
+
+# Variáveis de Ambiente
+
+Arquivos:
+
+```text
+.env
+
+.env.example
+
+.env.local
+
+.env.test
+```
+
+Nunca versionar:
+
+.env
+
+---
+
+# Organização do Banco
+
+Estrutura:
+
+```text
+database/
+
+├── migrations/
+├── seeds/
+├── backups/
+├── scripts/
+└── README.md
+```
+
+---
+
+# Migrations
+
+Toda alteração estrutural deverá possuir migration.
+
+Nunca alterar banco manualmente.
+
+---
+
+# Seeds
+
+Responsáveis por popular:
+
+Categorias
+
+Lojas
+
+Configurações iniciais
+
+Dados de desenvolvimento
+
+Nunca conter dados sensíveis.
+
+---
+
+# Backups
+
+Utilizados apenas para ambientes locais.
+
+Nunca armazenar backups dentro do repositório.
+
+O diretório existe apenas para scripts auxiliares.
+
+---
+
+# Organização do Scraping
+
+Estrutura:
+
+```text
+scraping/
+
+├── connectors/
+├── browser/
+├── parsers/
+├── extractors/
+├── normalizers/
+├── validators/
+├── pipelines/
+├── selectors/
+└── resources/
+```
+
+---
+
+# Connectors
+
+Cada loja possui um Connector próprio.
+
+Exemplos:
+
+AmazonConnector
+
+KabumConnector
+
+PichauConnector
+
+TerabyteConnector
+
+MercadoLivreConnector
+
+---
+
+# Browser
+
+Responsável exclusivamente pelo Playwright.
+
+Nunca interpretar HTML.
+
+---
+
+# Parsers
+
+Transformam HTML em estruturas navegáveis.
+
+---
+
+# Extractors
+
+Extraem dados da estrutura HTML.
+
+Exemplos:
+
+Título
+
+Preço
+
+Disponibilidade
+
+Imagem
+
+Link
+
+Avaliação
+
+---
+
+# Normalizers
+
+Padronizam dados.
+
+Exemplos:
+
+Nome
+
+Preço
+
+Moeda
+
+Categorias
+
+URLs
+
+---
+
+# Validators
+
+Validam integridade dos dados extraídos.
+
+Nunca executam scraping.
+
+---
+
+# Pipelines
+
+Orquestram o fluxo:
+
+Fetch
+
+↓
+
+Parse
+
+↓
+
+Extract
+
+↓
+
+Normalize
+
+↓
+
+Validate
+
+↓
+
+Persist
+
+---
+
+# Selectors
+
+Armazenam seletores CSS e XPath.
+
+Cada loja possui seus próprios arquivos.
+
+Nunca misturar seletores de lojas diferentes.
+
+---
+
+# Organização de Logs
+
+Estrutura:
+
+```text
+logs/
+
+├── application/
+├── scraping/
+├── scheduler/
+├── api/
+└── archive/
+```
+
+Em produção, preferencialmente utilizar logging estruturado e armazenamento externo.
+
+---
+
+# Organização de Scripts
+
+Estrutura:
+
+```text
+scripts/
+
+├── setup/
+├── database/
+├── scraping/
+├── maintenance/
+├── release/
+└── development/
+```
+
+Scripts devem ser idempotentes sempre que possível.
+
+---
+
+# Organização do Docker
+
+Estrutura:
+
+```text
+docker/
+
+├── backend/
+├── frontend/
+├── database/
+├── development/
+└── production/
+```
+
+Cada serviço deve possuir configuração própria.
+
+---
+
+# Organização do GitHub
+
+Estrutura:
+
+```text
+.github/
+
+├── workflows/
+├── ISSUE_TEMPLATE/
+├── PULL_REQUEST_TEMPLATE.md
+├── CODEOWNERS
+└── dependabot.yml
+```
+
+---
+
+# Workflows
+
+Separar pipelines por responsabilidade.
+
+Exemplos:
+
+CI
+
+Lint
+
+Test
+
+Build
+
+Release
+
+Docker
+
+---
+
+# Recursos Compartilhados
+
+Estrutura:
+
+```text
+resources/
+
+├── icons/
+├── images/
+├── logos/
+├── mock-data/
+└── templates/
+```
+
+Nunca armazenar arquivos temporários.
+
+---
+
+# Estrutura Final Esperada
+
+O projeto deverá manter separação clara entre:
+
+- Código de domínio
+- Aplicação
+- Apresentação
+- Infraestrutura
+- Frameworks
+- Testes
+- Documentação
+- Scripts
+- Configuração
+
+Nenhum módulo deve assumir responsabilidades pertencentes a outro.
+
+---
+
+# Checklist
+
+Antes de adicionar um novo arquivo:
+
+[ ] A pasta correta já existe?
+
+[ ] O arquivo possui responsabilidade única?
+
+[ ] Existe documentação correspondente?
+
+[ ] A nomenclatura segue o padrão oficial?
+
+[ ] Não há duplicação de responsabilidade?
+
+---
+
+# Critérios de Aceitação
+
+A estrutura do projeto será considerada correta quando:
+
+[ ] A organização permanecer consistente.
+
+[ ] Cada módulo possuir responsabilidade única.
+
+[ ] O domínio permanecer isolado.
+
+[ ] A infraestrutura permanecer desacoplada.
+
+[ ] A documentação refletir a estrutura implementada.
+
+[ ] Novos desenvolvedores conseguirem localizar facilmente qualquer componente.
+
+---
+
+# Encerramento
+
+O PROJECT_STRUCTURE.md define a organização oficial do repositório do Deal Monitor.
+
+Toda implementação deverá respeitar esta estrutura.
+
+Qualquer alteração estrutural deverá ser registrada por meio de uma ADR antes de ser aplicada.
 
 Fim do Documento.
